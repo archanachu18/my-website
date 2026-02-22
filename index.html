@@ -29,25 +29,6 @@
             border-bottom: 1px solid #00ff00;
             padding-bottom: 5px;
         }
-        .typing {
-            display: inline-block;
-            border-right: 3px solid #00ff00;
-            white-space: nowrap;
-            overflow: hidden;
-            width: 0;
-            animation: typing 3s steps(40, end) forwards,
-                       blink 0.7s infinite;
-            max-width: 100%;
-        }
-
-        @keyframes typing {
-            from { width: 0 }
-            to { width: 24ch; }
-        }
-
-        @keyframes blink {
-            50% { border-color: transparent }
-        }
         .glow:hover {
             text-shadow: 0 0 15px #00ff00;
             transition: 0.3s;
@@ -88,13 +69,28 @@
         }
     </style>
 </head>
+<script>
+    const text = "Electronics And Communication Student|Tech Enthusiast";
+    const typingElement = document.getElementById("typing-text");
 
+    let index = 0;
+
+    function typeEffect() {
+        if (index < text.length) {
+            typingElement.innerHTML += text.charAt(index);
+            index++;
+            setTimeout(typeEffect, 50);
+        }
+    }
+
+    typeEffect();
+</script>
 <body>
-
 <canvas id="matrix"></canvas>
+
 <header> 
     <h1 class="glow">M ARCHANA</h1>
-    <p class="typing">Electronics and Communication Student | Tech Enthusiast</p>
+    <p id="typing-text"></p>
 </header>
 
 <section>
@@ -174,6 +170,7 @@
 
 </body>
 </html>
+
 
 
 

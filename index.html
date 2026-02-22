@@ -1,18 +1,24 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Archana | Tech Portfolio</title>
+    <title>M ARCHANA| PORTFOLIO</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
         body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            background-color: #111;
-            color: white;
+             margin: 0;
+            background-color: black;
+            color: #00ff00;
+            font-family: "Courier New", monospace;
+            overflow-x: hidden;
         }
         header {
-            background: #000;
-            padding: 20px;
             text-align: center;
+            padding: 40px 20px;
+            border-bottom: 1px solid #00ff00;
+        }
+        h1 {
+            font-size: 40px;
+            text-shadow: 0 0 10px #00ff00;
         }
         section {
             padding: 30px;
@@ -20,57 +26,150 @@
             margin: auto;
         }
         h2 {
-            border-bottom: 2px solid #555;
+            border-bottom: 1px solid #00ff00;
             padding-bottom: 5px;
         }
-        .project {
-            margin-bottom: 15px;
+        .typing {
+            border-right: 3px solid #00ff00;
+            white-space: nowrap;
+            overflow: hidden;
+            width: 0;
+            animation: typing 4s steps(40, end) forwards,
+                       blink 0.7s infinite;
         }
-        footer {
+
+        @keyframes typing {
+            from { width: 0 }
+            to { width: 100% }
+        }
+
+        @keyframes blink {
+            50% { border-color: transparent }
+        }
+        .glow:hover {
+            text-shadow: 0 0 15px #00ff00;
+            transition: 0.3s;
+        }
+         footer {
             text-align: center;
             padding: 20px;
-            background: #000;
+            border-top: 1px solid #00ff00;
+            margin-top: 40px;
             font-size: 14px;
+        }
+        canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            opacity: 0.08;
+        }
+         @media (max-width: 768px) {
+    
+            h1 {
+                font-size: 28px;
+            }
+    
+            .typing {
+                white-space: normal;
+                border-right: none;
+                animation: none;
+                width: 100%;
+            }
+    
+            section {
+                padding: 20px;
+            }
+             body {
+                font-size: 14px;
+            }
         }
     </style>
 </head>
+
 <body>
 
-<header>
-    <h1>Archana</h1>
-    <p>Electronics and Communication Student | Tech Enthusiast</p>
+<canvas id="matrix"></canvas>
+<header> 
+    <h1>class="glow">M ARCHANA</h1>
+    <p>class="typing">Electronics and Communication Student | Tech Enthusiast</p>
 </header>
 
 <section>
-    <h2>About Me</h2>
+    <h2>ABOUT ME</h2>
     <p>
-        I am an Electronics and Communication student passionate about programming and problem solving.
+        I am a First year Electronics and Communication student passionate about programming and problem solving.
         I enjoy learning new technologies and building projects to strengthen my fundamentals.
     </p>
 </section>
 
 <section>
-    <h2>Technical Skills</h2>
-    <p>C Programming</p>
-    <p>HTML & Basic CSS</p>
-    <p>Problem Solving</p>
+    <h2>TECHNICAL SKILLS</h2>
+    <p>class="glow">Python Programming</p>
+    <p>class="glow">C Programming</p>
+    <p>class="glow">HTML & Basic CSS</p>
+    <p>class="glow">Problem Solving</p>
 </section>
 
 <section>
-    <h2>Projects</h2>
+    <h2>PROJECTS/h2>
     <div class="project">
-        <strong>To do App Creation</strong>
+        <strong>TO-DO APP CREATION</strong>
         <p>Created using flutter and Visual Studio Code.</p>
     </div>
     <div class="project">
-        <strong>Portfolio Website</strong>
+        <strong>PORTFOLIOWEBSITEe</strong>
         <p>Designed and deployed using GitHub Pages.</p>
     </div>
 </section>
 
 <footer>
-    © 2026 Archana
+   > System.out.println("Thank you for visiting.");
 </footer>
+<script>
+    const canvas = document.querySelector("matrix");
+    const ctx = canvas.getContext("2d");
+    function resizeCanvas(){
+        canvas.height = window.innerHeight;
+        canvas.width = window.innerWidth;
+    }
+    resizeCanvas();
+    window.addEventListener("resize", resizeCanvas);
+
+    const letters = "01";
+    const fontSize = 14;
+    let columns = canvas.width / fontSize;
+    let drops = [];
+
+    function initDrops() {
+        columns = canvas.width / fontSize;
+        drops = [];
+        for (let x = 0; x < columns; x++)
+            drops[x] = 1;
+    }
+    initDrops();
+    window.addEventListener("resize", initDrops);
+
+    function draw() {
+        ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        ctx.fillStyle = "#00ff00";
+        ctx.font = fontSize + "px monospace";
+        for (let i = 0; i < drops.length; i++) {
+            const text = letters[Math.floor(Math.random() * letters.length)];
+            ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+            if (drops[i] * fontSize > canvas.height && Math.random() > 0.975)
+                drops[i] = 0;
+
+            drops[i]++;
+        }
+    }
+
+    setInterval(draw, 33);
+</script>
 
 </body>
 </html>
+

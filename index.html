@@ -1,14 +1,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>M Archana | Hacker Portfolio</title>
-
+    <title>Archana | Hacker Console</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <style>
         body {
             margin: 0;
-            background-color: black;
+            background: black;
             color: #00ff00;
             font-family: "Courier New", monospace;
             overflow-x: hidden;
@@ -19,50 +18,57 @@
             top: 0;
             left: 0;
             z-index: -1;
-            opacity: 0.12;
+            opacity: 0.1;
         }
 
         header {
             text-align: center;
-            padding: 40px 20px;
+            padding: 30px;
             border-bottom: 1px solid #00ff00;
         }
 
         h1 {
-            font-size: 40px;
             margin: 0;
             text-shadow: 0 0 10px #00ff00;
         }
 
-        section {
-            padding: 30px 20px;
+        #typing-text {
+            margin-top: 10px;
+        }
+
+        .terminal {
             max-width: 900px;
-            margin: auto;
+            margin: 30px auto;
+            padding: 20px;
+            border: 1px solid #00ff00;
+            min-height: 300px;
         }
 
-        h2 {
-            border-bottom: 1px solid #00ff00;
-            padding-bottom: 5px;
+        .input-line {
+            display: flex;
         }
 
-        .glow:hover {
-            text-shadow: 0 0 15px #00ff00;
-            transition: 0.3s;
+        .prompt {
+            margin-right: 5px;
+        }
+
+        input {
+            background: black;
+            border: none;
+            color: #00ff00;
+            font-family: "Courier New", monospace;
+            width: 100%;
+            outline: none;
         }
 
         footer {
             text-align: center;
             padding: 20px;
             border-top: 1px solid #00ff00;
-            margin-top: 40px;
             font-size: 14px;
         }
 
-        /* Mobile Responsive */
         @media (max-width: 768px) {
-            h1 {
-                font-size: 28px;
-            }
             body {
                 font-size: 14px;
             }
@@ -75,33 +81,16 @@
 <canvas id="matrix"></canvas>
 
 <header>
-    <h1 class="glow">M ARCHANA</h1>
+    <h1>M ARCHANA</h1>
     <p id="typing-text"></p>
 </header>
 
-<section>
-    <h2>ABOUT ME</h2>
-    <p>
-        I am passionate about programming, problem solving, and building systems from scratch.
-        I continuously experiment and learn to strengthen my technical foundations.
-    </p>
-</section>
-
-<section>
-    <h2>TECHNICAL SKILLS</h2>
-    <p class="glow">C Programming</p>
-    <p class="glow">HTML & CSS</p>
-    <p class="glow">Problem Solving</p>
-</section>
-
-<section>
-    <h2>PROJECTS</h2>
-    <p>To-Do App Creation</p>
-    <p>Deployed Portfolio Website</p>
-</section>
+<div class="terminal" id="terminal">
+    <div>> Type "help" to see available commands</div>
+</div>
 
 <footer>
-    > System.out.println("Thank you for visiting.");
+    > Hacker Portfolio Console v1.0
 </footer>
 
 <script>
@@ -144,21 +133,76 @@
     setInterval(drawMatrix, 35);
 
 
-    // TYPING EFFECT
-    const text = "Electronics and Communication Student | Tech Enthusiast";
+    // TYPING INTRO
+    const introText = "Electronics and Communication Student |Tech Enthusiast";
     const typingElement = document.getElementById("typing-text");
-
     let index = 0;
 
     function typeEffect() {
-        if (index < text.length) {
-            typingElement.innerHTML += text.charAt(index);
+        if (index < introText.length) {
+            typingElement.innerHTML += introText.charAt(index);
             index++;
             setTimeout(typeEffect, 50);
         }
     }
 
     typeEffect();
+
+
+    // TERMINAL LOGIC
+    const terminal = document.getElementById("terminal");
+
+    function addInputLine() {
+        const inputLine = document.createElement("div");
+        inputLine.className = "input-line";
+        inputLine.innerHTML = '<span class="prompt">></span><input type="text" autofocus />';
+        terminal.appendChild(inputLine);
+        inputLine.querySelector("input").focus();
+
+        inputLine.querySelector("input").addEventListener("keydown", function(e) {
+            if (e.key === "Enter") {
+                const command = this.value.trim().toLowerCase();
+                this.disabled = true;
+                processCommand(command);
+            }
+        });
+    }
+
+    function processCommand(command) {
+        const output = document.createElement("div");
+
+        switch(command) {
+            case "help":
+                output.innerHTML = "Available commands: about, skills, projects, clear";
+                break;
+
+            case "about":
+                output.innerHTML = "I am Archana, a Computer Science student passionate about programming and tech innovation.";
+                break;
+
+            case "skills":
+                output.innerHTML = "Skills: C Programming, HTML, CSS, Problem Solving";
+                break;
+
+            case "projects":
+                output.innerHTML = "Projects: Matrix Program, Palindrome Checker, Portfolio Website";
+                break;
+
+            case "clear":
+                terminal.innerHTML = "";
+                addInputLine();
+                return;
+
+            default:
+                output.innerHTML = "Command not recognized. Type 'help'.";
+        }
+
+        terminal.appendChild(output);
+        addInputLine();
+        terminal.scrollTop = terminal.scrollHeight;
+    }
+
+    addInputLine();
 </script>
 
 </body>
